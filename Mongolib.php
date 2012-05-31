@@ -6,7 +6,7 @@
 
 abstract class Mongolib {
 
-	private $connection_string;
+	private $_connection_string;
 	
 	
 	protected $_CI; //lets us store a reference to the CI instance
@@ -24,6 +24,12 @@ abstract class Mongolib {
 		
 	}
 	
+	
+	/*connection methods based almost entirely on the work of:
+	
+		Kyle J. Dye | www.kyledye.com | kyle@kyledye.com (2010)
+		
+	*/
 	
 	/**
 	 *	--------------------------------------------------------------------------------
@@ -50,7 +56,7 @@ abstract class Mongolib {
 			// connect to the daemon
 			$mongo = new Mongo($this->connection_string, $options);
 
-			// select the 'posts' collection
+			//set db and collection
 			$c = $mongo->selectDB($this->_dbName)->selectCollection($this->_collName);
 			$this->collection =& $c;
 			
@@ -59,14 +65,6 @@ abstract class Mongolib {
 		}
 		
 	}
-	
-	
-	
-	/*connection methods based on work by:
-	
-		Kyle J. Dye | www.kyledye.com | kyle@kyledye.com (2010)
-		
-	*/
 	
 	/**
 	 *	--------------------------------------------------------------------------------
@@ -114,7 +112,7 @@ abstract class Mongolib {
 			$connection_string .= "{$this->host}";
 		}
 		
-		$this->connection_string = trim($connection_string);
+		$this->_connection_string = trim($connection_string);
 	}
 
 	
