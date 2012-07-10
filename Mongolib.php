@@ -57,8 +57,7 @@ abstract class Mongolib {
 			$mongo = new Mongo($this->connection_string, $options);
 
 			//set db and collection
-			$c = $mongo->selectDB($this->_dbName)->selectCollection($this->_collName);
-			$this->collection =& $c;
+			$this->collection = $mongo->{$this->_dbName}->{$this->_collName};
 			
 		} catch(MongoConnectionException $e) {
 			show_error("Unable to connect to MongoDB: {$e->getMessage()}", 500);
