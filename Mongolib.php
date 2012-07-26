@@ -13,7 +13,8 @@ abstract class Mongolib {
 	protected $_dbName; //The name of the collection. you should set this in a subclass
 	protected $_collName; //The name of the collection. you should set this in a subclass
 	
-	public $collection; //This will be the resource you act upon. eg. $this->collection->insert();
+	public $db; // This will be the db resource you can act upon. eg. $this->db->cmd(); 
+	public $collection; //This will be the collection resource you act upon. eg. $this->collection->insert();
 	
 	function __construct(){
 	
@@ -30,6 +31,8 @@ abstract class Mongolib {
 		Kyle J. Dye | www.kyledye.com | kyle@kyledye.com (2010)
 		
 	*/
+
+		
 	
 	/**
 	 *	--------------------------------------------------------------------------------
@@ -53,10 +56,11 @@ abstract class Mongolib {
 		}
 		
 		try {
-			// connect to the daemon
+			// new mongo resource
 			$mongo = new Mongo($this->connection_string, $options);
 
-			//set db and collection
+			//db and collection resources
+			$this->db = $mongo->{$this->_dbName};
 			$this->collection = $mongo->{$this->_dbName}->{$this->_collName};
 			
 		} catch(MongoConnectionException $e) {
